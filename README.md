@@ -15,20 +15,7 @@ Word版本的研究报告框架
 
 实施：
 2.1	表结构入库
-将所有表名、字段名、字段注释提取出来（用 DatabaseMetaData 或 SQL 查询系统表）。
-存成这种 JSON：
-json
-CopyEdit
-{
-  "table": "CORP_LOAN",
-  "columns": [
-    {"name": "CUSTOMER_ID", "comment": "客户号"},
-    {"name": "BALANCE", "comment": "贷款余额"},
-    {"name": "LOAN_DATE", "comment": "贷款日期"},
-    {"name": "CORP_TYPE", "comment": "客户类型"}
-  ]
-}
-同时把这份 JSON 做成向量（使用本地embedding模型），存到 Milvus / FAISS。
+将所有表名、字段名、字段注释提取出来（用 DatabaseMetaData 或 SQL 查询系统表）。存成JSON，同时把这份 JSON 做成向量（使用本地embedding模型），存到 Milvus / FAISS。
 
 
 2.2	取数脚本生成规范
@@ -70,7 +57,7 @@ SQL生成规范：
 
 用户需求：
 查询2024年对公客户贷款余额大于1000万的记录
-________________________________________
+
 2.4	Java实现关键点
 表结构读取
 用 DatabaseMetaData 获取所有表和字段信息。
@@ -110,12 +97,29 @@ SQL校验
 2.6	Milvus
 向量数据库，使用MSL2 Linux+Docker在本地部署
 
+2.7	SimCSE
+WSL2 下通过 Docker 部署 SimCSE
+在Windows下载Nvidia Game 驱动，会自动安装WSL2 CUDA驱动
+PS：如下载包时网路不通，需通过Docker Desktop 设置WSL2网络代理
+ 
+PS：还不行，用阿里镜像地址下载
+PS：还不行，在windows下载资源后wsl直接引用
+
+
+新建simCSE 容器
+mkdir -p ~/simcse && cd ~/simcse
+ 
+构建并启动容器
+docker-compose up –build -d
+检查进程
+docker ps
+
 3.	第三阶段 9.12 – 9.30
 丰富完善自动化脚本生成工具，利用历史数据库工单测试并调优。
 产出：
 最终的自动化脚本生成工具应用程序
 
-4.	第四阶段 10.9 – 10.31
+4.	第四阶段 10.9 – 10.15
 完成研究报告的撰写，组员各自负责撰写的部分每日整合到云盘文档中。
 产出：
 最终研究报告
