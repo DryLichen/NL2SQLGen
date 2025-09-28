@@ -98,9 +98,18 @@ SQL校验
 向量数据库，使用MSL2 Linux+Docker在本地部署
 
 2.7	SimCSE
+Dev环境：
+使用python3
+pip install sentence-transformers
+下载模型脚本 download_simcse.py
+启动服务脚本simcse_service.py
+
+
+SIT部署:
 WSL2 下通过 Docker 部署 SimCSE
 在Windows下载Nvidia Game 驱动，会自动安装WSL2 CUDA驱动
-PS：如下载包时网路不通，需通过Docker Desktop 设置WSL2网络代理
+PS：如下载包时网路不通，设置clash为tun虚拟网卡模式
+PS：还不行，通过Docker Desktop 设置WSL2网络代理，host.docker.internal
  
 PS：还不行，用阿里镜像地址下载
 PS：还不行，在windows下载资源后wsl直接引用
@@ -110,9 +119,18 @@ PS：还不行，在windows下载资源后wsl直接引用
 mkdir -p ~/simcse && cd ~/simcse
  
 构建并启动容器
-docker-compose up –build -d
-检查进程
-docker ps
+docker-compose up --build -d
+
+
+2.8	deepseek
+https://huggingface.co/deepseek-ai/deepseek-coder-1.3b-instruct
+WSL2配置：
+memory=8GB，swap=8GB，processors=4，localhostForwarding=true
+（6.7b为完整版本，但需要至少16G的内存。如果需要下载，应使用sanpshot方式而非pretained，且使用量化）
+
+使用python3
+下载模型脚本 download_model.py
+启动服务脚本deepseek_service.py
 
 3.	第三阶段 9.12 – 9.30
 丰富完善自动化脚本生成工具，利用历史数据库工单测试并调优。
