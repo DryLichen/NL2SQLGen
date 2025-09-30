@@ -1,21 +1,34 @@
 package com.shrcb.NL2SQLGen.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import reactor.core.publisher.Mono;
 
-import java.util.Map;
+import java.util.List;
 
+/**
+ * 获取语义向量化后数据 simCSE
+ */
 @Service
-public class EmbeddingService {
-    private final RestTemplate rt = new RestTemplate();
-    private final String embedUrl; // e.g. http://localhost:8000/embed
+public interface EmbeddingService {
 
-    public EmbeddingService(String embedUrl) { this.embedUrl = embedUrl; }
+    /**
+     * 将文本向量化，同步方法
+     * @param text text to be embedded
+     * @return vector of input text
+     */
+    List<Float> embed(String text);
 
-    public float[] embed(String text) {
-        // payload & response format depend on your embedding service
-        Map<String, String> payload = Map.of("text", text);
-        float[] vector = rt.postForObject(embedUrl, payload, float[].class);
-        return vector;
-    }
+    /**
+     * 将文本向量化，异步方法
+     * @param text text to be embedded
+     * @return vector of input text
+     */
+    Mono<List<Float>> embedAsync(String text);
+
+    /**
+     * 将文本向量化，批量方法
+     * @param texts text list to be embedded
+     * @return vector list of input text
+     */
+    public List<List<Float>> batchEmbed(List<String> texts);
 }
