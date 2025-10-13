@@ -9,6 +9,15 @@ spring:
   pathmatch:
    matching-strategy: ANT_PATH_MATCHER
 
+mybatis:
+ mapper-locations: classpath:mapper/*.xml
+ type-aliases-package: com.example.entity
+ configuration:
+  map-underscore-to-camel-case: true
+  cache-enabled: true
+  lazy-loading-enabled: true
+  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 可选，打印SQL日志
+
 milvus:
   url: 172.20.192.137
   port: 19530

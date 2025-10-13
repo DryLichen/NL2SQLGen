@@ -24,6 +24,8 @@ public class MilvusServiceImpl {
 
     @Autowired
     private MilvusClientV2 milvusClient;
+    @Autowired
+    private EmbeddingServiceImpl embeddingService;
 
     /**
      * Create a new collection of vectors
